@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setArticles } from "../store/actions";
-import { fetchNewsArticles } from "../services/newsAPIService";
-import { fetchGuardianArticles } from "../services/guardianAPIService";
-import { fetchNYTArticles } from "../services/nytAPIService";
 
-const FilterOptions = () => {
+const FilterOptions = ({data}) => {
   const [filterType, setFilterType] = useState("");
   const [date, setDate] = useState("");
   const [source, setSource] = useState("");
@@ -20,34 +17,18 @@ const FilterOptions = () => {
   };
 
   const handleClick = async () => {
-    let allArticles = [];
-
-    if (filterType === "date") {
-      const newsAPIArticles = await fetchNewsArticles(date);
-      const guardianArticles = await fetchGuardianArticles(date);
-      const nytArticles = await fetchNYTArticles(date);
-      allArticles = [...newsAPIArticles, ...guardianArticles, ...nytArticles];
-    } else if (filterType === "category") {
-      const guardianArticles = await fetchGuardianArticles(category);
-      const nytArticles = await fetchNYTArticles(category);
-      allArticles = [...guardianArticles, ...nytArticles];
-    } else if (filterType === "source") {
-      const newsAPIArticles = await fetchNewsArticles(source);
-      const nytArticles = await fetchNYTArticles(source);
-      allArticles = [...newsAPIArticles, ...nytArticles];
-    }
 
     let filteredArticles = [];
 
     if (filterType === "date") {
-      filteredArticles = allArticles.filter((article) => {
+      filteredArticles = data.filter((article) => {
         const articleDate = formatDate(
           article.webPublicationDate || article.publishedAt || article.pub_date
         );
         return articleDate === date;
       });
     } else if (filterType === "source") {
-      filteredArticles = allArticles.filter((article) => {
+      filteredArticles = data.filter((article) => {
         const articleSource =
           typeof article.source === "string"
             ? article.source.toLowerCase()
@@ -59,7 +40,7 @@ const FilterOptions = () => {
         return articleSource === source.toLowerCase();
       });
     }else if (filterType === "category") {
-      filteredArticles = allArticles.filter((article) => {
+      filteredArticles = data.filter((article) => {
         const articleCategory = (typeof article.sectionName === "string" && article.sectionName.toLowerCase()) || (typeof article.news_desk === "string" && article.news_desk.toLowerCase())
         return articleCategory === category;
       });
@@ -123,7 +104,7 @@ const FilterOptions = () => {
           className="p-2 ml-2 rounded-md bg-blue-500 text-white"
           onClick={handleClick}
         >
-          Search
+          Filter Data
         </button>
       )}
     </div>
