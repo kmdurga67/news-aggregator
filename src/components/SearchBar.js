@@ -5,6 +5,7 @@ import { fetchGuardianArticles } from "../services/guardianAPIService";
 import { fetchNewsArticles } from "../services/newsAPIService";
 import { fetchNYTArticles } from "../services/nytAPIService";
 import FilterOptions from "./FilterOptions";
+import ArticleList from './ArticleList';
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -44,6 +45,9 @@ const SearchBar = () => {
       </div>
       <div className="flex justify-stretch">
         <FilterOptions data={datatoFilter} />
+      </div>
+      <div className="flex justify-stretch">
+        <ArticleList />
       </div>
     </>
   );

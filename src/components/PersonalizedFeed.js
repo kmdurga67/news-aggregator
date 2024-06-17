@@ -56,7 +56,6 @@ const PersonalizedFeed = () => {
     ];
 
     setArticlesState(prevArticles => {
-      // Concatenate new articles with the existing ones and remove duplicates
       const combinedArticles = [...prevArticles, ...newArticles];
       const uniqueArticles = combinedArticles.filter((article, index, self) =>
         index === self.findIndex(a => a.url === article.url)
@@ -64,7 +63,6 @@ const PersonalizedFeed = () => {
       return uniqueArticles;
     });
 
-    // Instead of dispatching new articles, concatenate them in the component state
     dispatch(setArticles([...articles, ...newArticles]));
   };
 
