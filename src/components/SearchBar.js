@@ -42,7 +42,9 @@ const SearchBar = () => {
           Search
         </button>
       </div>
-      <FilterOptions data={datatoFilter} />
+      <div className="flex justify-stretch">
+        <FilterOptions data={datatoFilter} />
+      </div>
     </>
   );
 };

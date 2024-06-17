@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ArticleCard = ({ article }) => {
-  const { title, description, url, urlToImage,publishedAt, webTitle, webUrl, webPublicationDate, web_url, abstract, headline, pub_date } = article;
+  const { title, description, url, urlToImage,publishedAt, author, webTitle, webUrl, webPublicationDate, web_url, abstract, headline, pub_date,byline } = article;
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -19,7 +19,8 @@ const ArticleCard = ({ article }) => {
       <img src={urlToImage} alt='noimagefound' />
       <h2 className="text-xl font-bold mb-2">{title}</h2>
       <p className="text-gray-700 mb-4">{description}</p>
-      <p className="text-gray-700 mb-4">{formatDate(publishedAt)}</p>
+      <p className="text-gray-700 mb-4"><span className='text-lg font-semibold'>Author Name:</span> {author}</p>
+      <p className="text-gray-700 mb-4"><span className='text-lg font-semibold'>Published Date:</span> {formatDate(publishedAt)}</p>
       <a href={url} className="text-blue-500" target="_blank" rel="noopener noreferrer">
         Read more
       </a>
@@ -28,7 +29,7 @@ const ArticleCard = ({ article }) => {
     {webTitle && webUrl && webPublicationDate && (
       <div className="border p-4 rounded-lg shadow-md">
       <h2 className="text-xl font-bold mb-2">{webTitle}</h2>
-      <p className="text-gray-700 mb-4">{formatDate(webPublicationDate)}</p>
+      <p className="text-gray-700 mb-4"><span className='text-lg font-semibold'>Published Date:</span> {formatDate(webPublicationDate)}</p>
       <a href={webUrl} className="text-blue-500" target="_blank" rel="noopener noreferrer">
         Read more
       </a>
@@ -38,7 +39,8 @@ const ArticleCard = ({ article }) => {
     { web_url && abstract && headline && pub_date && (<div className="border p-4 rounded-lg shadow-md">
       <h2 className="text-xl font-bold mb-2">{headline.main}</h2>
       <p className="text-gray-700 mb-4">{abstract}</p>
-      <p className="text-gray-700 mb-4">{formatDate(pub_date)}</p>
+      <p className="text-gray-700 mb-4"><span className='text-lg font-semibold'>Author Name:</span> {byline.original}</p>
+      <p className="text-gray-700 mb-4"><span className='text-lg font-semibold'>Published Date:</span> {formatDate(pub_date)}</p>
       <a href={web_url} className="text-blue-500" target="_blank" rel="noopener noreferrer">
         Read more
       </a>
