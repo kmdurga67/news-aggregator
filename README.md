@@ -89,3 +89,17 @@ Welcome to the NEWS aggregator Application! This web application aggregates and 
 
 - Select any value from the categories, sources & authors to get relevant data.
 -  If saving data to sessionstorage to display data when switches between pages.
+
+## Use Docker
+
+- Modify Dockerfile as per your directory
+- Build and Run the Docker Container
+  ```bash
+  docker build -t news-aggregator .
+
+- Run the Docker Container with the .env File
+  ```bash
+  docker run --env-file .env -p 3000:3000 news-aggregator
+
+- Run docker to your system
+  
