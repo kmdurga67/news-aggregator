@@ -6,6 +6,7 @@ import { fetchGuardianArticles } from "../services/guardianAPIService";
 import { fetchNewsArticles } from "../services/newsAPIService";
 import { fetchNYTArticles } from "../services/nytAPIService";
 import { sourcesData, categoriesData, authorsData } from "../utils/constants";
+import Loader from './Loader';
 
 const PersonalizedFeed = () => {
   const [sources, setSources] = useState([]);
@@ -15,16 +16,22 @@ const PersonalizedFeed = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedAuthors, setSelectedAuthors] = useState([]);
   const [articles, setArticlesState] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const formatOptions = (data) =>
     data.map((item) => ({ value: item, label: item }));
 
   useEffect(() => {
+    const storedArticles = sessionStorage.getItem('articles');
+    if (storedArticles) {
+      dispatch(setArticles(JSON.parse(storedArticles)));
+    }
+
     setSources(formatOptions(sourcesData));
     setCategories(formatOptions(categoriesData));
     setAuthors(formatOptions(authorsData));
-  }, []);
+  }, [dispatch]);
 
   const handleSelectionChange = async (
     selectedOptions,
@@ -48,33 +55,41 @@ const PersonalizedFeed = () => {
   };
 
   const handleSearch = async (query) => {
-    const newsAPIArticles = await fetchNewsArticles(query);
-    const guardianArticles = await fetchGuardianArticles(query);
-    const nytArticles = await fetchNYTArticles(query);
-
-    const newArticles = [
-      ...newsAPIArticles,
-      ...guardianArticles,
-      ...nytArticles,
-    ];
-
-    setArticlesState((prevArticles) => {
-      const combinedArticles = [...prevArticles, ...newArticles];
-      const uniqueArticles = combinedArticles.filter(
-        (article, index, self) =>
-          index === self.findIndex((a) => a.url === article.url)
-      );
-      return uniqueArticles;
-    });
-
-    const combinedArticles = [...articles, ...newArticles];
-
-    sessionStorage.setItem("articles", JSON.stringify(combinedArticles));
-    const storedArticles = JSON.parse(sessionStorage.getItem("articles"));
-
-    if (storedArticles) {
-      dispatch(setArticles(storedArticles));
+    setLoading(true);
+    try{
+      const newsAPIArticles = await fetchNewsArticles(query);
+      const guardianArticles = await fetchGuardianArticles(query);
+      const nytArticles = await fetchNYTArticles(query);
+  
+      const newArticles = [
+        ...newsAPIArticles,
+        ...guardianArticles,
+        ...nytArticles,
+      ];
+  
+      setArticlesState((prevArticles) => {
+        const combinedArticles = [...prevArticles, ...newArticles];
+        const uniqueArticles = combinedArticles.filter(
+          (article, index, self) =>
+            index === self.findIndex((a) => a.url === article.url)
+        );
+        return uniqueArticles;
+      });
+  
+      const combinedArticles = [...articles, ...newArticles];
+  
+      sessionStorage.setItem("articles", JSON.stringify(combinedArticles));
+      const storedArticles = JSON.parse(sessionStorage.getItem("articles"));
+  
+      if (storedArticles) {
+        dispatch(setArticles(storedArticles));
+      }
+    }catch(error){
+      console.log("Error Fetching Articles: ", error)
+    }finally{
+      setLoading(false)
     }
+   
   };
 
   return (
@@ -132,11 +147,11 @@ const PersonalizedFeed = () => {
           />
         </div>
       </div>
-      {articles.length > 0 && (
+      {articles.length > 0 ? (
         <div>
           <h2 className="text-xl font-bold mb-4">Articles</h2>
         </div>
-      )}
+      ) : (<Loader />)}
     </div>
   );
 };
