@@ -151,7 +151,7 @@ const PersonalizedFeed = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">Articles</h2>
         </div>
-      ) : (<Loader />)}
+      ) : loading ?  (<Loader />) : null}
     </div>
   );
 };
