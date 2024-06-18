@@ -1,70 +1,91 @@
-# Getting Started with Create React App
+# News Aggregator Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the NEWS aggregator Application! This web application aggregates and displays personalized news articles fetched from various APIs based on user preferences.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [API Keys Setup](#api-keys-setup)
+- [Usage](#usage)
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Personalized Feed:**
+  - Select sources, categories, and authors to fetch personalized articles.
+  - Display fetched articles in a responsive grid layout on the Home page.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Search Functionality:**
+  - Search for articles using keywords on the Search page.
+  - Filter search results by sources, categories, and authors.
 
-### `npm test`
+- **Session Storage:**
+  - Persist fetched articles using session storage to maintain state between page navigations.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Loading Indicator:**
+  - Display a loading indicator while fetching articles to improve user experience.
 
-### `npm run build`
+- **Responsive Design:**
+  - Utilizes Tailwind CSS for responsive styling, ensuring compatibility across devices.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend:**
+  - React.js: JavaScript library for building user interfaces.
+  - React Router: Declarative routing for React applications.
+  - Redux: State management library for managing application state.
+  - Axios: Promise-based HTTP client for making API requests.
+  - Tailwind CSS: Utility-first CSS framework for styling.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **APIs:**
+  - News API: Provides access to news articles from various sources.
+  - Guardian API: Offers news articles and content from The Guardian.
+  - New York Times API: Retrieves articles and content from The New York Times.
 
-### `npm run eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Clone the repository:**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   git clone <repository-url>
+   cd personalized-feed-app
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+2. **Install Dependencies**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    ```bash
+    npm install
 
-## Learn More
+3. **Set up API keys**
+   - Obtain API keys for News API, Guardian API, and New York Times API.
+   - Create a .env file in the main directory.
+   - Take help of .env.example file for creating variables of News API, Guardian API & New York Times API.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Run the app;ication**
+   
+   ```
+   npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Usage
 
-### Code Splitting
+## Home Page:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Displays a personalized feed of articles based on default or user-selected preferences.
+- Clicking on "Search" redirects to the Search page.
 
-### Analyzing the Bundle Size
+## Search Page:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Allows users to search for articles using keywords.
+- Search for source, category to filter articles. After searching any source, category hit button "filter data".
+- Selet date to filter articles from the searched articles. After selecting any date hit button "filter data".
+- Clicking "Search" fetches and displays relevant articles.
+ 
+## Article List:
 
-### Making a Progressive Web App
+- Displays fetched articles in a responsive grid layout.
+- Uses session storage to persist and display articles between page navigations.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Personalized feed 
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Select any value from the categories, sources & authors to get relevant data.
+-  If saving data to sessionstorage to display data when switches between pages.
