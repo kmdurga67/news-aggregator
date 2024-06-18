@@ -48,8 +48,8 @@ Welcome to the NEWS aggregator Application! This web application aggregates and 
 1. **Clone the repository:**
 
    ```bash
-   git clone <repository-url>
-   cd personalized-feed-app
+   git clone https://github.com/kmdurga67/news-aggregator.git
+   cd news-aggregator
 
 2. **Install Dependencies**
 
