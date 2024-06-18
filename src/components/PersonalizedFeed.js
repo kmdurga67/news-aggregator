@@ -17,9 +17,8 @@ const PersonalizedFeed = () => {
   const [articles, setArticlesState] = useState([]);
   const dispatch = useDispatch();
 
-  const formatOptions = (data) => {
-    return data.map((item) => ({ value: item, label: item }));
-  };
+  const formatOptions = (data) =>
+    data.map((item) => ({ value: item, label: item }));
 
   useEffect(() => {
     setSources(formatOptions(sourcesData));
@@ -27,10 +26,14 @@ const PersonalizedFeed = () => {
     setAuthors(formatOptions(authorsData));
   }, []);
 
-  const handleSelectionChange = async (selectedOptions, setSelectedOptions, type) => {
+  const handleSelectionChange = async (
+    selectedOptions,
+    setSelectedOptions,
+    type
+  ) => {
     setSelectedOptions(selectedOptions);
 
-    const newOptions = selectedOptions.map(option => option.value);
+    const newOptions = selectedOptions.map((option) => option.value);
     const query = new URLSearchParams();
 
     if (type === "sources") {
@@ -55,15 +58,23 @@ const PersonalizedFeed = () => {
       ...nytArticles,
     ];
 
-    setArticlesState(prevArticles => {
+    setArticlesState((prevArticles) => {
       const combinedArticles = [...prevArticles, ...newArticles];
-      const uniqueArticles = combinedArticles.filter((article, index, self) =>
-        index === self.findIndex(a => a.url === article.url)
+      const uniqueArticles = combinedArticles.filter(
+        (article, index, self) =>
+          index === self.findIndex((a) => a.url === article.url)
       );
       return uniqueArticles;
     });
 
-    dispatch(setArticles([...articles, ...newArticles]));
+    const combinedArticles = [...articles, ...newArticles];
+
+    sessionStorage.setItem("articles", JSON.stringify(combinedArticles));
+    const storedArticles = JSON.parse(sessionStorage.getItem("articles"));
+
+    if (storedArticles) {
+      dispatch(setArticles(storedArticles));
+    }
   };
 
   return (
@@ -75,7 +86,11 @@ const PersonalizedFeed = () => {
             options={sources}
             value={selectedSources}
             onChange={(selectedOptions) =>
-              handleSelectionChange(selectedOptions, setSelectedSources, "sources")
+              handleSelectionChange(
+                selectedOptions,
+                setSelectedSources,
+                "sources"
+              )
             }
             placeholder="Select Sources"
             className="basic-multi-select"
@@ -88,7 +103,11 @@ const PersonalizedFeed = () => {
             options={categories}
             value={selectedCategories}
             onChange={(selectedOptions) =>
-              handleSelectionChange(selectedOptions, setSelectedCategories, "categories")
+              handleSelectionChange(
+                selectedOptions,
+                setSelectedCategories,
+                "categories"
+              )
             }
             placeholder="Select Categories"
             className="basic-multi-select"
@@ -101,7 +120,11 @@ const PersonalizedFeed = () => {
             options={authors}
             value={selectedAuthors}
             onChange={(selectedOptions) =>
-              handleSelectionChange(selectedOptions, setSelectedAuthors, "authors")
+              handleSelectionChange(
+                selectedOptions,
+                setSelectedAuthors,
+                "authors"
+              )
             }
             placeholder="Select Authors"
             className="basic-multi-select"
